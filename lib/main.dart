@@ -1,3 +1,6 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:distro_watch_app/src/periodic_task.dart';
+import 'package:distro_watch_app/src/variables.dart';
 import 'package:flavorbanner/flavorbanner.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +13,11 @@ import 'package:distro_watch_app/widgets/welcome_page.dart';
 void main() async {
   await initApp();
   runApp(const MyApp());
+  await AndroidAlarmManager.periodic(
+    const Duration(hours: customAlarmInterval),
+    customAlarmID,
+    checkNewDistros,
+  );
 }
 
 class MyApp extends StatelessWidget {
