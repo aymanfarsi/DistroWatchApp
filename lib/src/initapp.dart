@@ -1,4 +1,5 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/variables.dart';
 import 'package:flavorbanner/flavorbanner.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'package:get/get.dart';
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-   await AndroidAlarmManager.initialize();
+  await AndroidAlarmManager.initialize();
   FlavorConfig(
     flavor: Flavor.DEV,
     color: Colors.grey,
@@ -33,7 +34,9 @@ Future<void> initApp() async {
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
+  await MyDatabase.openDB();
   await refreshDistros();
+  await MyDatabase.closeDB();
 }
 
 Future<void> initNotifications() async {
@@ -53,6 +56,6 @@ void selectNotification(String? payload) async {
 Future<void> refreshDistros() async {
   String? response = await FetchData.getData();
   if (response != null) {
-    parseData(response);
+    await parseData(response);
   }
 }

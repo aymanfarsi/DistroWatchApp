@@ -14,7 +14,9 @@ void main() async {
   await initApp();
   runApp(const MyApp());
   await AndroidAlarmManager.periodic(
-    const Duration(hours: customAlarmInterval),
+    const Duration(
+      minutes: customAlarmInterval,
+    ),
     customAlarmID,
     checkNewDistros,
   );

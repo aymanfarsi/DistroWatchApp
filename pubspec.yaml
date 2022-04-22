@@ -42,6 +42,7 @@ dependencies:
   flavorbanner: ^2.0.1
   flutter_local_notifications: ^9.4.0
   android_alarm_manager_plus: ^2.0.5
+  sqflite: ^2.0.2+1
 
 dev_dependencies:
   flutter_test:
