@@ -12,13 +12,15 @@ import 'package:distro_watch_app/widgets/welcome_page.dart';
 
 void main() async {
   await initApp();
-  runApp(const MyApp());
   await AndroidAlarmManager.periodic(
     const Duration(
       minutes: customAlarmInterval,
     ),
     customAlarmID,
     checkNewDistros,
+  );
+  runApp(
+    const MyApp(),
   );
 }
 
@@ -37,9 +39,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: '/',
-          page: () => FlavorBanner(
-            child: MainPage(),
-          ),
+          page: () => MainPage(),
           transition: Transition.fade,
         ),
         GetPage(
@@ -52,9 +52,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/welcome',
-          page: () => const FlavorBanner(
-            child: WelcomePage(),
-          ),
+          page: () => const WelcomePage(),
           transition: Transition.fade,
         ),
       ],

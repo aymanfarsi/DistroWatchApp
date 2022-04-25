@@ -5,16 +5,31 @@ import 'package:distro_watch_app/src/parse.dart';
 import 'package:distro_watch_app/src/variables.dart';
 
 Future<void> checkNewDistros() async {
+  await pushNotification('Checking for new distros...');
   List<DistroModel> oldDistros = distros;
   String? response = await FetchData.getData();
   if (response != null) {
     parseData(response);
   }
-  List<DistroModel> newDistros = distros
+  List<String> newUrls = distros
+      .map(
+        (item) => item.url,
+      )
       .toSet()
       .difference(
-        oldDistros.toSet(),
+        oldDistros
+            .map(
+              (item) => item.url,
+            )
+            .toSet(),
       )
       .toList();
-  await pushNotification(newDistros.length);
+  List<DistroModel> newDistros = distros
+      .where(
+        (item) => newUrls.contains(item.url),
+      )
+      .toList();
+  await pushNotification(
+    newDistros.length.toString(),
+  );
 }

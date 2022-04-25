@@ -1,7 +1,7 @@
 import 'package:distro_watch_app/src/variables.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-Future<void> pushNotification(int number) async {
+Future<void> pushNotification(String number) async {
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails(
     '0',
