@@ -5,9 +5,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distro_watch_app/src/initapp.dart';
 import 'package:distro_watch_app/widgets/custom_drawer.dart';
 import 'package:distro_watch_app/src/variables.dart';
+import 'package:get/get.dart';
 
-class MainPage extends StatelessWidget {
-  MainPage({Key? key}) : super(key: key);
+class LatestReleases extends StatelessWidget {
+  LatestReleases({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -85,7 +86,10 @@ class MainPage extends StatelessWidget {
                   ),
                   contentPadding: const EdgeInsets.all(12.0),
                   onTap: () {
-                    // Get.toNamed('/main/$index');
+                    Get.toNamed(
+                      '/details',
+                      arguments: distros[index],
+                    );
                   },
                 ),
               );

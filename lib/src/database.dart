@@ -32,7 +32,7 @@ class MyDatabase {
   }
 
   static Future<List<Map<String, dynamic>>> getAll() async {
-    return await db.query(dbTable);
+    return await db.query(dbTable, orderBy: 'id DESC');
   }
 
   static Future<void> insertDB(DistroModel distro) async {

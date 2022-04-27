@@ -13,8 +13,8 @@ import 'package:get/get.dart';
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initNotifications();
   await AndroidAlarmManager.initialize();
+  await initNotifications();
   FlavorConfig(
     flavor: Flavor.DEV,
     color: Colors.grey,
@@ -43,7 +43,7 @@ Future<void> initApp() async {
 
 Future<void> initNotifications() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('app_icon');
+      AndroidInitializationSettings('@mipmap/ic_launcher');
   const InitializationSettings initializationSettings =
       InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
