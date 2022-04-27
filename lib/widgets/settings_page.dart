@@ -1,5 +1,7 @@
 import 'package:distro_watch_app/src/database.dart';
+import 'package:distro_watch_app/src/notification.dart';
 import 'package:distro_watch_app/widgets/custom_drawer.dart';
+import 'package:distro_watch_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -26,6 +28,7 @@ class SettingsPage extends StatelessWidget {
         child: CustomDrawer(),
       ),
       body: SettingsList(
+        shrinkWrap: true,
         sections: [
           SettingsSection(
             title: const Text('Common'),
@@ -45,8 +48,23 @@ class SettingsPage extends StatelessWidget {
                 title: const Text('Delete Database'),
                 onPressed: (BuildContext ctx) async {
                   await MyDatabase.openDB();
+                  List<Map<String, Object?>> tempData =
+                      await MyDatabase.getAll();
                   await MyDatabase.deleteDB();
                   await MyDatabase.closeDB();
+                  customSnackBar(
+                    title: 'Settings',
+                    description: '${tempData.length} entries were deleted',
+                    icon: Icons.local_fire_department,
+                  );
+                },
+              ),
+              SettingsTile(
+                title: const Text('Test Notifications'),
+                onPressed: (BuildContext ctx) async {
+                  await pushNotification(
+                    '23',
+                  );
                 },
               ),
             ],

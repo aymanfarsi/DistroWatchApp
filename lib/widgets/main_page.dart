@@ -1,5 +1,5 @@
+import 'package:distro_watch_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:distro_watch_app/src/initapp.dart';
@@ -30,19 +30,10 @@ class MainPage extends StatelessWidget {
             icon: const Icon(Icons.refresh),
             onPressed: () async {
               await refreshDistros();
-              Get.snackbar(
-                "DistroWatch",
-                "List of Distros refreshed",
-                icon: const Icon(Icons.person, color: Colors.white),
-                snackPosition: SnackPosition.BOTTOM,
-                backgroundColor: const Color.fromARGB(255, 25, 187, 216),
-                borderRadius: 20,
-                margin: const EdgeInsets.all(15),
-                colorText: Colors.white,
-                duration: const Duration(seconds: 4),
-                isDismissible: true,
-                dismissDirection: DismissDirection.horizontal,
-                forwardAnimationCurve: Curves.easeOutBack,
+              customSnackBar(
+                title: "DistroWatch",
+                description: "List of Distros refreshed",
+                icon: Icons.person,
               );
             },
           ),

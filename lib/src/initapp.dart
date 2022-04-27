@@ -4,6 +4,7 @@ import 'package:distro_watch_app/src/variables.dart';
 import 'package:flavorbanner/flavorbanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:distro_watch_app/src/fetch.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initNotifications();
   await AndroidAlarmManager.initialize();
   FlavorConfig(
     flavor: Flavor.DEV,
@@ -49,6 +51,7 @@ Future<void> initNotifications() async {
 }
 
 void selectNotification(String? payload) async {
+  FlutterAppBadger.removeBadge();
   debugPrint('notification payload: $payload');
   await Get.toNamed('/');
 }

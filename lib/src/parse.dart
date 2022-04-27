@@ -1,9 +1,8 @@
 import 'dart:convert';
-
+import 'package:xml2json/xml2json.dart';
 import 'package:distro_watch_app/models/distro.dart';
 import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/variables.dart';
-import 'package:xml2json/xml2json.dart';
 
 Future<void> parseData(String data) async {
   Xml2Json xml2json = Xml2Json();
@@ -36,7 +35,7 @@ Future<void> parseData(String data) async {
       .toList();
   distros.addAll(newDistros);
   // add new distros to database
-  for (DistroModel distro in newDistros) {
+  for (DistroModel distro in newDistros.reversed) {
     await MyDatabase.insertDB(distro);
   }
 }

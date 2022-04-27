@@ -1,5 +1,6 @@
 import 'package:distro_watch_app/src/variables.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 
 Future<void> pushNotification(String number) async {
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
@@ -19,4 +20,5 @@ Future<void> pushNotification(String number) async {
     null,
     platformChannelSpecifics,
   );
+  FlutterAppBadger.updateBadgeCount(1);
 }

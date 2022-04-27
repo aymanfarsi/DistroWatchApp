@@ -44,6 +44,7 @@ dependencies:
   android_alarm_manager_plus: ^2.0.5
   sqflite: ^2.0.2+1
   intro_slider: ^3.0.4
+  flutter_app_badger: ^1.4.0
 
 dev_dependencies:
   flutter_test:
