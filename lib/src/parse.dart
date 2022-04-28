@@ -35,7 +35,9 @@ Future<void> parseData(String data) async {
       .toList();
   distros.addAll(newDistros);
   // add new distros to database
+  await MyDatabase.openDB();
   for (DistroModel distro in newDistros.reversed) {
     await MyDatabase.insertDB(distro);
   }
+  await MyDatabase.closeDB();
 }

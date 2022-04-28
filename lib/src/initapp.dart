@@ -1,4 +1,5 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:distro_watch_app/models/distro.dart';
 import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/variables.dart';
 import 'package:flavorbanner/flavorbanner.dart';
@@ -57,6 +58,15 @@ void selectNotification(String? payload) async {
 }
 
 Future<void> refreshDistros() async {
+  await MyDatabase.openDB();
+  List<Map<String, Object?>> tempData = await MyDatabase.getAll();
+  distros.clear();
+  for (Map<String, Object?> item in tempData) {
+    distros.add(
+      DistroModel.fromJson(item),
+    );
+  }
+  await MyDatabase.closeDB();
   String? response = await FetchData.getData();
   if (response != null) {
     await parseData(response);

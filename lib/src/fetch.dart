@@ -12,4 +12,16 @@ class FetchData {
       return null;
     }
   }
+
+  static Future<String?> getDistroDetails({required String section}) async {
+    String url = 'https://distrowatch.com/table.php?distribution=$section';
+    http.Response response = await http.get(
+      Uri.parse(url),
+    );
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
 }

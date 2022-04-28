@@ -2,6 +2,7 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:distro_watch_app/src/periodic_task.dart';
 import 'package:distro_watch_app/src/variables.dart';
 import 'package:distro_watch_app/widgets/about.dart';
+import 'package:distro_watch_app/widgets/details_page.dart';
 import 'package:distro_watch_app/widgets/faq.dart';
 import 'package:distro_watch_app/widgets/latest_distros.dart';
 import 'package:distro_watch_app/widgets/latest_headlines.dart';
@@ -22,7 +23,7 @@ void main() async {
   await initApp();
   await AndroidAlarmManager.periodic(
     const Duration(
-      minutes: customAlarmInterval,
+      hours: customAlarmInterval,
     ),
     customAlarmID,
     checkNewDistros,
@@ -53,6 +54,11 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/releases',
           page: () => LatestReleases(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/details',
+          page: () => const DetailsPage(),
           transition: Transition.fade,
         ),
         GetPage(

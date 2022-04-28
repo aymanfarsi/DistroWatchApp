@@ -1,5 +1,6 @@
 import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/notification.dart';
+import 'package:distro_watch_app/src/variables.dart';
 import 'package:distro_watch_app/widgets/custom_drawer.dart';
 import 'package:distro_watch_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -51,13 +52,14 @@ class SettingsPage extends StatelessWidget {
                   await MyDatabase.openDB();
                   List<Map<String, Object?>> tempData =
                       await MyDatabase.getAll();
-                  await MyDatabase.deleteDB();
+                  await MyDatabase.deleteData();
                   await MyDatabase.closeDB();
                   customSnackBar(
                     title: 'Settings',
                     description: '${tempData.length} entries were deleted',
                     icon: Icons.local_fire_department,
                   );
+                  distros.clear();
                 },
               ),
               SettingsTile(
