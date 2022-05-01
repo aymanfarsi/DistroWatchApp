@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:distro_watch_app/models/distro.dart';
 import 'package:distro_watch_app/src/database.dart';
@@ -14,7 +16,7 @@ import 'package:get/get.dart';
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await AndroidAlarmManager.initialize();
+  if (Platform.isAndroid) await AndroidAlarmManager.initialize();
   await initNotifications();
   FlavorConfig(
     flavor: Flavor.DEV,
@@ -45,8 +47,12 @@ Future<void> initApp() async {
 Future<void> initNotifications() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
-  const InitializationSettings initializationSettings =
-      InitializationSettings(android: initializationSettingsAndroid);
+  const LinuxInitializationSettings initializationSettingsLinux =
+      LinuxInitializationSettings(defaultActionName: 'DS');
+  const InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    linux: initializationSettingsLinux,
+  );
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: selectNotification);
 }
