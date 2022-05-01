@@ -18,11 +18,4 @@ class FetchData {
     const String url = 'https://distrowatch.com/news/dw.xml';
     return _sendRequest(url: url);
   }
-
-  static Future<String?> getDetails({
-    required String section,
-  }) async {
-    String url = 'https://distrowatch.com/table.php?distribution=$section';
-    return _sendRequest(url: url);
-  }
 }
