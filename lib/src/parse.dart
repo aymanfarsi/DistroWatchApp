@@ -21,23 +21,21 @@ Future<void> parseData(String data) async {
       ),
     );
   }
-  List<String> newUrls = listItems
-      .map((item) => item.url)
-      .toSet()
-      .difference(
-        distros.map((item) => item.url).toSet(),
-      )
-      .toList();
-  List<DistroModel> newDistros = listItems
-      .where(
-        (item) => newUrls.contains(item.url),
-      )
-      .toList();
-  distros.addAll(newDistros);
-  // add new distros to database
-  await MyDatabase.openDB();
-  for (DistroModel distro in newDistros.reversed) {
-    await MyDatabase.insertDB(distro);
+  List<DistroModel> newDistros = [];
+  if (listItems.isNotEmpty) {
+    for (DistroModel item in listItems) {
+      if (!distros.any((distro) => distro.url == item.url)) {
+        newDistros.add(item);
+      }
+    }
   }
-  await MyDatabase.closeDB();
+  if (newDistros.isNotEmpty) {
+    distros.addAll(newDistros);
+    await MyDatabase.openDB();
+    for (DistroModel distro in newDistros.reversed) {
+      distro.id = ++dbIDs;
+      await MyDatabase.insertDB(distro);
+    }
+    await MyDatabase.closeDB();
+  }
 }

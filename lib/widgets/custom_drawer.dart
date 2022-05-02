@@ -64,7 +64,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Settings'),
             onTap: () {
-              Get.offAllNamed('/settings');
+              Get.toNamed('/settings');
             },
           ),
           ListTile(

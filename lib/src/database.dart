@@ -30,7 +30,8 @@ class MyDatabase {
   }
 
   static Future<void> deleteData() async {
-    // delete all rows
+    // delete all data from database
+    dbIDs = 0;
     await db.rawDelete('DELETE FROM $dbTable');
   }
 

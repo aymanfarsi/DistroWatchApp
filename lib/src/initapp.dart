@@ -68,6 +68,7 @@ Future<void> refreshDistros() async {
   List<Map<String, Object?>> tempData = await MyDatabase.getAll();
   distros.clear();
   for (Map<String, Object?> item in tempData) {
+    dbIDs++;
     distros.add(
       DistroModel.fromJson(item),
     );

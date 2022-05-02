@@ -43,57 +43,62 @@ class LatestReleases extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(9.0),
-          child: ListView.builder(
-            itemCount: distros.length,
-            padding: const EdgeInsets.only(bottom: 8.0),
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                elevation: 3,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: ListTile(
-                  leading: SizedBox(
-                    width: 50,
-                    child: (distros[index].title.contains('Weekly'))
-                        ? const Icon(Icons.error)
-                        : CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl:
-                                'https://distrowatch.com/images/yvzhuwbpy/${distros[index].section}.png',
-                            alignment: Alignment.center,
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                          ),
+          child: Obx(
+            () => ListView.builder(
+              itemCount: distros.length,
+              padding: const EdgeInsets.only(bottom: 8.0),
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  elevation: 3,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
-                  title: Text(
-                    distros[index].title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+                  child: ListTile(
+                    leading: SizedBox(
+                      width: 50,
+                      child: (distros[index].title.contains('Weekly'))
+                          ? const Icon(Icons.error)
+                          : CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl:
+                                  'https://distrowatch.com/images/yvzhuwbpy/${distros[index].section}.png',
+                              alignment: Alignment.center,
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                            ),
                     ),
-                  ),
-                  subtitle: RichText(
-                    text: TextSpan(
-                      text:
-                          '${distros[index].description.substring(0, 125)}...',
+                    title: Text(
+                      distros[index].title,
                       style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 13.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    textAlign: TextAlign.justify,
+                    subtitle: RichText(
+                      text: TextSpan(
+                        text:
+                            '${distros[index].description.substring(0, 125)}...',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 13.0,
+                        ),
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    trailing: Text(
+                      distros[index].id.toString(),
+                    ),
+                    contentPadding: const EdgeInsets.all(12.0),
+                    onTap: () {
+                      Get.toNamed(
+                        '/details',
+                        arguments: distros[index],
+                      );
+                    },
                   ),
-                  contentPadding: const EdgeInsets.all(12.0),
-                  onTap: () {
-                    Get.toNamed(
-                      '/details',
-                      arguments: distros[index],
-                    );
-                  },
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),
