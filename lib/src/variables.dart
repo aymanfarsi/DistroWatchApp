@@ -18,4 +18,3 @@ const int customAlarmInterval = 1; // in hours
 const String dbName = 'distrowatch.db';
 const String dbTable = 'distros';
 late Database db;
-int dbIDs = 0;

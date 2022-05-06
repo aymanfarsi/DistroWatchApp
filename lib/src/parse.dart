@@ -13,6 +13,9 @@ Future<void> parseData(String data) async {
   for (Map<String, dynamic> item in items) {
     listItems.add(
       DistroModel(
+        id: int.parse(
+          item['link'][r'$t'].split('/').last,
+        ),
         title: item['title'][r'$t'],
         url: item['link'][r'$t'],
         description: item['description'][r'$t'],
@@ -24,7 +27,9 @@ Future<void> parseData(String data) async {
   List<DistroModel> newDistros = [];
   if (listItems.isNotEmpty) {
     for (DistroModel item in listItems) {
-      if (!distros.any((distro) => distro.url == item.url)) {
+      if (!distros.any(
+        (distro) => distro.url == item.url,
+      )) {
         newDistros.add(item);
       }
     }
@@ -33,7 +38,6 @@ Future<void> parseData(String data) async {
     distros.addAll(newDistros);
     await MyDatabase.openDB();
     for (DistroModel distro in newDistros.reversed) {
-      distro.id = ++dbIDs;
       await MyDatabase.insertDB(distro);
     }
     await MyDatabase.closeDB();
