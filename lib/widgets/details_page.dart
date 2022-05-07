@@ -135,6 +135,36 @@ class _DetailsPageState extends State<DetailsPage> {
                             ],
                           ),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Center(
+                          child: Text(
+                            'Description',
+                            style: TextStyle(
+                              fontSize: 21,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: RichText(
+                            text: TextSpan(
+                              text: distro.description,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                            textAlign: TextAlign.justify,
+                            softWrap: true,
+                            overflow: TextOverflow.clip,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         const Center(
                           child: Text(
                             'General Information',
@@ -226,8 +256,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                   );
                                 },
                                 icon: const Icon(Icons.web),
-                                label: Text(
-                                  '${snapshot.data!['Distribution']} Releases',
+                                label: const Text(
+                                  'Releases Info',
                                 ),
                               ),
                               ElevatedButton.icon(
@@ -238,8 +268,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                   );
                                 },
                                 icon: const Icon(Icons.web),
-                                label: Text(
-                                    '${snapshot.data!['Distribution']} Linux Distro'),
+                                label: const Text(
+                                  'Linux Distro',
+                                ),
+                                clipBehavior: Clip.hardEdge,
                               ),
                             ],
                           ),
