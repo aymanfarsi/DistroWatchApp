@@ -4,7 +4,7 @@ import 'package:distro_watch_app/src/variables.dart';
 import 'package:distro_watch_app/widgets/about.dart';
 import 'package:distro_watch_app/widgets/details_page.dart';
 import 'package:distro_watch_app/widgets/faq.dart';
-import 'package:distro_watch_app/widgets/latest_distros.dart';
+import 'package:distro_watch_app/widgets/rankings.dart';
 import 'package:distro_watch_app/widgets/latest_headlines.dart';
 import 'package:distro_watch_app/widgets/latest_packages.dart';
 import 'package:distro_watch_app/widgets/more_pages.dart';
@@ -62,8 +62,8 @@ class MyApp extends StatelessWidget {
           transition: Transition.fade,
         ),
         GetPage(
-          name: '/distros',
-          page: () => const LatestDistros(),
+          name: '/rankings',
+          page: () => const Rankings(),
           transition: Transition.fade,
         ),
         GetPage(

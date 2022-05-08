@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:distro_watch_app/models/ranking.dart';
+import 'package:distro_watch_app/models/ranktype.dart';
+import 'package:distro_watch_app/src/fetch.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:distro_watch_app/models/distro.dart';
 import 'package:distro_watch_app/src/database.dart';
@@ -41,5 +44,25 @@ Future<void> parseData(String data) async {
       await MyDatabase.insertDB(distro);
     }
     await MyDatabase.closeDB();
+  }
+}
+
+// parse rankings
+Future<void> parseRankings(RankType rankType) async {
+  List<dynamic>? results = await FetchData.getRankings();
+
+  if (results != null) {
+    results = results
+        .where(
+          (element) => element['dataSpanName'] == getType(type: rankType),
+        )
+        .toList();
+    List<RankingModel> listItems = [];
+    for (Map<String, dynamic> item in results.last['distributionsRanking']) {
+      listItems.add(
+        RankingModel.fromJson(item),
+      );
+    }
+    rankings.value = listItems;
   }
 }

@@ -26,9 +26,9 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Latest Distros'),
+            title: const Text('Distro Rankings'),
             onTap: () {
-              Get.offAllNamed('/distros');
+              Get.offAllNamed('/rankings');
             },
           ),
           ListTile(

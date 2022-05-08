@@ -1,10 +1,12 @@
 import 'package:distro_watch_app/models/distro.dart';
+import 'package:distro_watch_app/models/ranking.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 
 // List of distros
 RxList<DistroModel> distros = <DistroModel>[].obs;
+RxList<RankingModel> rankings = <RankingModel>[].obs;
 
 // Notifications
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
