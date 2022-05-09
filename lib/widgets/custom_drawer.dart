@@ -19,12 +19,18 @@ class CustomDrawer extends StatelessWidget {
             ),
             curve: Curves.elasticInOut,
           ),
+          /**
+           * ! Finished
+           */
           ListTile(
             title: const Text('Latest Releases'),
             onTap: () {
               Get.offAllNamed('/releases');
             },
           ),
+          /**
+           * ! Finished
+           */
           ListTile(
             title: const Text('Distro Rankings'),
             onTap: () {

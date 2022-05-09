@@ -14,9 +14,15 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 // Periodic background task
 const int customAlarmID = 0;
-const int customAlarmInterval = 1; // in hours
+const int customAlarmInterval = 15; // in minutes
 
 // Database
 const String dbName = 'distrowatch.db';
 const String dbTable = 'distros';
 late Database db;
+
+// Notification IDs
+int notificationID = 0;
+
+// Workmanager unique name
+int workmanagerUniqueName = 0;

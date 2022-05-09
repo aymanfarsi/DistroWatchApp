@@ -1,6 +1,7 @@
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
-import 'package:distro_watch_app/src/periodic_task.dart';
-import 'package:distro_watch_app/src/variables.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flavorbanner/flavorbanner.dart';
+
 import 'package:distro_watch_app/widgets/about.dart';
 import 'package:distro_watch_app/widgets/details_page.dart';
 import 'package:distro_watch_app/widgets/faq.dart';
@@ -10,10 +11,6 @@ import 'package:distro_watch_app/widgets/latest_packages.dart';
 import 'package:distro_watch_app/widgets/more_pages.dart';
 import 'package:distro_watch_app/widgets/random_distro.dart';
 import 'package:distro_watch_app/widgets/search_distro.dart';
-import 'package:flavorbanner/flavorbanner.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import 'package:distro_watch_app/src/initapp.dart';
 import 'package:distro_watch_app/widgets/latest_releases.dart';
 import 'package:distro_watch_app/widgets/settings_page.dart';
@@ -21,13 +18,14 @@ import 'package:distro_watch_app/widgets/welcome_page.dart';
 
 void main() async {
   await initApp();
-  await AndroidAlarmManager.periodic(
+  /* await AndroidAlarmManager.periodic(
     const Duration(
-      hours: customAlarmInterval,
+      minutes: customAlarmInterval,
     ),
     customAlarmID,
     checkNewDistros,
-  );
+    rescheduleOnReboot: true,
+  ); */
   runApp(
     const MyApp(),
   );
