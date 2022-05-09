@@ -1,10 +1,12 @@
 import 'package:distro_watch_app/models/distro.dart';
+import 'package:distro_watch_app/models/ranking.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 
 // List of distros
 RxList<DistroModel> distros = <DistroModel>[].obs;
+RxList<RankingModel> rankings = <RankingModel>[].obs;
 
 // Notifications
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -12,9 +14,15 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 // Periodic background task
 const int customAlarmID = 0;
-const int customAlarmInterval = 1; // in hours
+const int customAlarmInterval = 15; // in minutes
 
 // Database
 const String dbName = 'distrowatch.db';
 const String dbTable = 'distros';
 late Database db;
+
+// Notification IDs
+int notificationID = 0;
+
+// Workmanager unique name
+int workmanagerUniqueName = 0;

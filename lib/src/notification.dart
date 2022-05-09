@@ -2,7 +2,7 @@ import 'package:distro_watch_app/src/variables.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 
-Future<void> pushNotification(String number) async {
+Future<void> pushNotification(String message) async {
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails(
     '0',
@@ -15,10 +15,11 @@ Future<void> pushNotification(String number) async {
   const NotificationDetails platformChannelSpecifics =
       NotificationDetails(android: androidPlatformChannelSpecifics);
   await flutterLocalNotificationsPlugin.show(
-    0,
-    '$number New Linux Distros 😎',
+    notificationID,
+    message,
     null,
     platformChannelSpecifics,
   );
-  FlutterAppBadger.updateBadgeCount(1);
+  FlutterAppBadger.updateBadgeCount(notificationID + 1);
+  notificationID++;
 }

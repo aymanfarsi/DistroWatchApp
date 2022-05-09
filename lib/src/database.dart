@@ -19,7 +19,9 @@ class MyDatabase {
         db.rawQuery('SELECT * FROM $dbTable').then(
           (rows) {
             for (Map<String, dynamic> row in rows) {
-              distros.add(DistroModel.fromJson(row));
+              distros.add(
+                DistroModel.fromJson(row),
+              );
             }
           },
         );
@@ -27,12 +29,12 @@ class MyDatabase {
     );
   }
 
-  static Future<void> deleteDB() async {
-    await db.delete(dbTable);
+  static Future<void> deleteData() async {
+    await db.rawDelete('DELETE FROM $dbTable');
   }
 
   static Future<List<Map<String, dynamic>>> getAll() async {
-    return await db.query(dbTable);
+    return await db.query(dbTable, orderBy: 'id DESC');
   }
 
   static Future<void> insertDB(DistroModel distro) async {

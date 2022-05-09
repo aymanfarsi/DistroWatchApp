@@ -1,8 +1,10 @@
 import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/notification.dart';
+import 'package:distro_watch_app/src/variables.dart';
 import 'package:distro_watch_app/widgets/custom_drawer.dart';
 import 'package:distro_watch_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -28,7 +30,7 @@ class SettingsPage extends StatelessWidget {
         child: CustomDrawer(),
       ),
       body: SettingsList(
-        shrinkWrap: true,
+        shrinkWrap: false,
         sections: [
           SettingsSection(
             title: const Text('Common'),
@@ -50,13 +52,14 @@ class SettingsPage extends StatelessWidget {
                   await MyDatabase.openDB();
                   List<Map<String, Object?>> tempData =
                       await MyDatabase.getAll();
-                  await MyDatabase.deleteDB();
+                  await MyDatabase.deleteData();
                   await MyDatabase.closeDB();
                   customSnackBar(
                     title: 'Settings',
                     description: '${tempData.length} entries were deleted',
                     icon: Icons.local_fire_department,
                   );
+                  distros.clear();
                 },
               ),
               SettingsTile(
@@ -65,6 +68,12 @@ class SettingsPage extends StatelessWidget {
                   await pushNotification(
                     '23',
                   );
+                },
+              ),
+              SettingsTile(
+                title: const Text('Go to Welcome Screen'),
+                onPressed: (BuildContext ctx) async {
+                  Get.offAllNamed('/welcome');
                 },
               ),
             ],

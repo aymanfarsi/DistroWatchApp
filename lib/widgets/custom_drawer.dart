@@ -13,33 +13,76 @@ class CustomDrawer extends StatelessWidget {
               fit: BoxFit.fitWidth,
               imageUrl: 'https://distrowatch.com/images/cpxtu/dwbanner.png',
               alignment: Alignment.center,
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
             curve: Curves.elasticInOut,
           ),
+          /**
+           * ! Finished
+           */
           ListTile(
             title: const Text('Latest Releases'),
             onTap: () {
-              Get.offAllNamed('/');
+              Get.offAllNamed('/releases');
+            },
+          ),
+          /**
+           * ! Finished
+           */
+          ListTile(
+            title: const Text('Distro Rankings'),
+            onTap: () {
+              Get.offAllNamed('/rankings');
             },
           ),
           ListTile(
-            title: const Text('Latest Distros'),
+            title: const Text('Latest Packages'),
             onTap: () {
-              Get.offAllNamed('/');
+              Get.offAllNamed('/packages');
+            },
+          ),
+          ListTile(
+            title: const Text('Latest Headlines'),
+            onTap: () {
+              Get.offAllNamed('/headlines');
+            },
+          ),
+          ListTile(
+            title: const Text('Search Linux Distro'),
+            onTap: () {
+              Get.offAllNamed('/search');
+            },
+          ),
+          ListTile(
+            title: const Text('Random Distro'),
+            onTap: () {
+              Get.offAllNamed('/random');
+            },
+          ),
+          ListTile(
+            title: const Text('More Pages'),
+            onTap: () {
+              Get.offAllNamed('/more');
             },
           ),
           ListTile(
             title: const Text('Settings'),
             onTap: () {
-              Get.offAllNamed('/settings');
+              Get.toNamed('/settings');
+            },
+          ),
+          ListTile(
+            title: const Text('FAQ'),
+            onTap: () {
+              Get.offAllNamed('/faq');
             },
           ),
           ListTile(
             title: const Text('About'),
             onTap: () {
-              //Get.offAllNamed('/about');
+              Get.offAllNamed('/about');
             },
           ),
         ],

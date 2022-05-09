@@ -41,10 +41,13 @@ dependencies:
   settings_ui: ^2.0.2
   flavorbanner: ^2.0.1
   flutter_local_notifications: ^9.4.0
-  android_alarm_manager_plus: ^2.0.5
+  # android_alarm_manager_plus: ^2.0.5
   sqflite: ^2.0.2+1
   intro_slider: ^3.0.4
   flutter_app_badger: ^1.4.0
+  html: ^0.15.0
+  url_launcher: ^6.1.0
+  workmanager: ^0.4.1
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +59,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+
+  flutter_native_splash: ^2.1.6
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/imgs/splash_image.jpg
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -69,9 +78,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/imgs/
+    - assets/logos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

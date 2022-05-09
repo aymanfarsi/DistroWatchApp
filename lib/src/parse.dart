@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:distro_watch_app/models/ranking.dart';
+import 'package:distro_watch_app/models/ranktype.dart';
+import 'package:distro_watch_app/src/fetch.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:distro_watch_app/models/distro.dart';
 import 'package:distro_watch_app/src/database.dart';
@@ -13,6 +16,9 @@ Future<void> parseData(String data) async {
   for (Map<String, dynamic> item in items) {
     listItems.add(
       DistroModel(
+        id: int.parse(
+          item['link'][r'$t'].split('/').last,
+        ),
         title: item['title'][r'$t'],
         url: item['link'][r'$t'],
         description: item['description'][r'$t'],
@@ -21,21 +27,42 @@ Future<void> parseData(String data) async {
       ),
     );
   }
-  List<String> newUrls = listItems
-      .map((item) => item.url)
-      .toSet()
-      .difference(
-        distros.map((item) => item.url).toSet(),
-      )
-      .toList();
-  List<DistroModel> newDistros = listItems
-      .where(
-        (item) => newUrls.contains(item.url),
-      )
-      .toList();
-  distros.addAll(newDistros);
-  // add new distros to database
-  for (DistroModel distro in newDistros.reversed) {
-    await MyDatabase.insertDB(distro);
+  List<DistroModel> newDistros = [];
+  if (listItems.isNotEmpty) {
+    for (DistroModel item in listItems) {
+      if (!distros.any(
+        (distro) => distro.url == item.url,
+      )) {
+        newDistros.add(item);
+      }
+    }
+  }
+  if (newDistros.isNotEmpty) {
+    distros.addAll(newDistros);
+    await MyDatabase.openDB();
+    for (DistroModel distro in newDistros.reversed) {
+      await MyDatabase.insertDB(distro);
+    }
+    await MyDatabase.closeDB();
+  }
+}
+
+// parse rankings
+Future<void> parseRankings(RankType rankType) async {
+  List<dynamic>? results = await FetchData.getRankings();
+
+  if (results != null) {
+    results = results
+        .where(
+          (element) => element['dataSpanName'] == getType(type: rankType),
+        )
+        .toList();
+    List<RankingModel> listItems = [];
+    for (Map<String, dynamic> item in results.last['distributionsRanking']) {
+      listItems.add(
+        RankingModel.fromJson(item),
+      );
+    }
+    rankings.value = listItems;
   }
 }

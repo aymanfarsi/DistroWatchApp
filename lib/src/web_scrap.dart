@@ -48,7 +48,9 @@ class CustomWebScraper {
       } else if (element.text.contains('Home Page')) {
         info['URL'] = data.last;
       } else if (element.text.contains('Screenshots')) {
-        info['Screenshots'] = element.querySelector('a')!.attributes['href'];
+        info['Screenshots'] = element.querySelector('a') == null
+            ? 'NULL'
+            : element.querySelector('a')!.attributes['href'];
       } else if (element.text.contains('Download Mirrors')) {
         info['Downloads'] = data.last;
       }

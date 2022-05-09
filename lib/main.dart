@@ -1,24 +1,31 @@
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
-import 'package:distro_watch_app/src/periodic_task.dart';
-import 'package:distro_watch_app/src/variables.dart';
-import 'package:flavorbanner/flavorbanner.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flavorbanner/flavorbanner.dart';
 
+import 'package:distro_watch_app/widgets/about.dart';
+import 'package:distro_watch_app/widgets/details_page.dart';
+import 'package:distro_watch_app/widgets/faq.dart';
+import 'package:distro_watch_app/widgets/rankings.dart';
+import 'package:distro_watch_app/widgets/latest_headlines.dart';
+import 'package:distro_watch_app/widgets/latest_packages.dart';
+import 'package:distro_watch_app/widgets/more_pages.dart';
+import 'package:distro_watch_app/widgets/random_distro.dart';
+import 'package:distro_watch_app/widgets/search_distro.dart';
 import 'package:distro_watch_app/src/initapp.dart';
-import 'package:distro_watch_app/widgets/main_page.dart';
+import 'package:distro_watch_app/widgets/latest_releases.dart';
 import 'package:distro_watch_app/widgets/settings_page.dart';
 import 'package:distro_watch_app/widgets/welcome_page.dart';
 
 void main() async {
   await initApp();
-  await AndroidAlarmManager.periodic(
+  /* await AndroidAlarmManager.periodic(
     const Duration(
       minutes: customAlarmInterval,
     ),
     customAlarmID,
     checkNewDistros,
-  );
+    rescheduleOnReboot: true,
+  ); */
   runApp(
     const MyApp(),
   );
@@ -38,8 +45,48 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         GetPage(
-          name: '/',
-          page: () => MainPage(),
+          name: '/welcome',
+          page: () => const WelcomePage(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/releases',
+          page: () => LatestReleases(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/details',
+          page: () => const DetailsPage(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/rankings',
+          page: () => const Rankings(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/packages',
+          page: () => const LatestPackages(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/headlines',
+          page: () => const LatestHeadlines(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/search',
+          page: () => const SearchDistro(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/random',
+          page: () => const RandomDistro(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/more',
+          page: () => const MorePages(),
           transition: Transition.fade,
         ),
         GetPage(
@@ -51,12 +98,17 @@ class MyApp extends StatelessWidget {
           transition: Transition.fadeIn,
         ),
         GetPage(
-          name: '/welcome',
-          page: () => const WelcomePage(),
+          name: '/faq',
+          page: () => const FAQ(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: '/about',
+          page: () => const About(),
           transition: Transition.fade,
         ),
       ],
-      initialRoute: '/',
+      initialRoute: '/releases',
     );
   }
 }
