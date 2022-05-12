@@ -3,10 +3,19 @@ import 'package:distro_watch_app/widgets/custom_drawer.dart';
 import 'package:distro_watch_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 
-class RandomDistro extends StatelessWidget {
-  RandomDistro({Key? key}) : super(key: key);
+class LatestDistros extends StatelessWidget {
+  LatestDistros({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  _fetchLatestDistros() async {
+    dynamic results = await parseRandomDistro();
+    customSnackBar(
+      title: 'Success',
+      description: 'Refreshed latest distributions',
+      icon: Icons.check_circle,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,32 +35,18 @@ class RandomDistro extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () async {
-              // await _fetchLatestDistros();
+              await _fetchLatestDistros();
               customSnackBar(
                 title: "DistroWatch",
-                description: "Refreshed Page",
+                description: "List of Distros refreshed",
                 icon: Icons.person,
               );
             },
           ),
         ],
       ),
-      body: FutureBuilder<String>(
-        future: parseRandomDistro(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Center(
-              child: Text(snapshot.data!),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text("${snapshot.error}"),
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+      body: const Center(
+        child: Text('Latest Distros'),
       ),
     );
   }

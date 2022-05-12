@@ -41,10 +41,9 @@ Future<void> initApp() async {
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
-  await MyDatabase.openDB();
-  await refreshDistros();
-  await MyDatabase.closeDB();
-
+  // await MyDatabase.openDB();
+  // await refreshDistros();
+  // await MyDatabase.closeDB();
   // FlutterNativeSplash
   FlutterNativeSplash.remove();
 }
@@ -95,7 +94,9 @@ Future<void> initWorkManager() async {
     //This allows cancellation of a started task.
     'checkNewDistros', // will be send to your callbackDispatcher function, indicating the task's type
     initialDelay: const Duration(seconds: 5),
-    frequency: const Duration(minutes: 15),
+    frequency: const Duration(
+      hours: customAlarmInterval,
+    ),
     tag: 'checkNewDistros',
     existingWorkPolicy: ExistingWorkPolicy.replace,
     constraints: Constraints(

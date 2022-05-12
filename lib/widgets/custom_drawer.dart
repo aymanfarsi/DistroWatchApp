@@ -38,6 +38,12 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            title: const Text('Latest Distros'),
+            onTap: () {
+              Get.offAllNamed('/rankings');
+            },
+          ),
+          ListTile(
             title: const Text('Latest Packages'),
             onTap: () {
               Get.offAllNamed('/packages');

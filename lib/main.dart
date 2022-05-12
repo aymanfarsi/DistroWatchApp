@@ -1,3 +1,4 @@
+import 'package:distro_watch_app/widgets/latest_distros.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flavorbanner/flavorbanner.dart';
@@ -65,6 +66,11 @@ class MyApp extends StatelessWidget {
           transition: Transition.fade,
         ),
         GetPage(
+          name: '/newdistros',
+          page: () => LatestDistros(),
+          transition: Transition.fade,
+        ),
+        GetPage(
           name: '/packages',
           page: () => const LatestPackages(),
           transition: Transition.fade,
@@ -81,7 +87,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/random',
-          page: () => const RandomDistro(),
+          page: () => RandomDistro(),
           transition: Transition.fade,
         ),
         GetPage(

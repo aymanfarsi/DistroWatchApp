@@ -14,7 +14,7 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 // Periodic background task
 const int customAlarmID = 0;
-const int customAlarmInterval = 15; // in minutes
+const int customAlarmInterval = 2; // in hours
 
 // Database
 const String dbName = 'distrowatch.db';
