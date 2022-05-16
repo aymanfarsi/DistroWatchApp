@@ -32,6 +32,15 @@ class _RankingsState extends State<Rankings> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    _scaffoldKey.currentState != null
+        ? _scaffoldKey.currentState!.dispose()
+        : null;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -45,7 +54,7 @@ class _RankingsState extends State<Rankings> {
             _scaffoldKey.currentState!.openDrawer();
           },
         ),
-        title: const Text('Latest Distributions'),
+        title: const Text('Distros Rankings'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -87,18 +96,18 @@ class _RankingsState extends State<Rankings> {
               ),
               FutureBuilder(
                 future: _fetchRankings(),
-                builder: (context, snapshot) => Obx(
-                  () {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.hasError) {
-                      return const Center(
-                        child: Text('Error fetching rankings'),
-                      );
-                    } else {
-                      return ListView.builder(
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return const Center(
+                      child: Text('Error fetching rankings'),
+                    );
+                  } else {
+                    return Obx(
+                      () => ListView.builder(
                         itemBuilder: ((context, index) {
                           String section = rankings[index].url.split('/').last;
                           String imageUrl =
@@ -136,10 +145,10 @@ class _RankingsState extends State<Rankings> {
                         itemCount: rankings.length,
                         shrinkWrap: true,
                         primary: false,
-                      );
-                    }
-                  },
-                ),
+                      ),
+                    );
+                  }
+                },
               ),
             ],
           ),

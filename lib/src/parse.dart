@@ -51,7 +51,6 @@ Future<void> parseData(String data) async {
 
 Future<void> parseRankings(RankType rankType) async {
   List<dynamic>? results = await FetchData.getRankings();
-
   if (results != null) {
     results = results
         .where(

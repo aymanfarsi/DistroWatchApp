@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
@@ -88,7 +89,8 @@ class _WelcomePageState extends State<WelcomePage> {
 
   void onDonePress() {
     // Back to the first tab
-    goToTab(0);
+    // goToTab(0);
+    Get.offAllNamed('/releases');
   }
 
   void onTabChangeCompleted(index) {

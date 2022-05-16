@@ -1,16 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
-import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
 class CustomWebScraper {
   static Future<Map<String, dynamic>> getDistroDetails(
       {required String section}) async {
-    http.Response response = await http.get(
-      Uri.parse(
-        'https://distrowatch.com/table.php?distribution=$section',
-      ),
+    Dio dio = Dio();
+    Response response = await dio.get(
+      'https://distrowatch.com/table.php?distribution=$section',
     );
-    Document document = parse(response.body);
+    Document document = parse(response.data);
     List<Element> elements = document.querySelectorAll(
       "td > ul > li",
     );

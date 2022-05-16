@@ -26,7 +26,7 @@ class RandomDistro extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () async {
-              // await _fetchLatestDistros();
+              await parseRandomDistro();
               customSnackBar(
                 title: "DistroWatch",
                 description: "Refreshed Page",

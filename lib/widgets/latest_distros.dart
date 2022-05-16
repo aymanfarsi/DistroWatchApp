@@ -1,4 +1,3 @@
-import 'package:distro_watch_app/src/parse.dart';
 import 'package:distro_watch_app/widgets/custom_drawer.dart';
 import 'package:distro_watch_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ class LatestDistros extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   _fetchLatestDistros() async {
-    dynamic results = await parseRandomDistro();
+    // dynamic results = await parseRandomDistro();
     customSnackBar(
       title: 'Success',
       description: 'Refreshed latest distributions',
@@ -29,7 +28,7 @@ class LatestDistros extends StatelessWidget {
             _scaffoldKey.currentState!.openDrawer();
           },
         ),
-        title: const Text('DistroWatch'),
+        title: const Text('Latest Linux Distributions'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -38,7 +37,7 @@ class LatestDistros extends StatelessWidget {
               await _fetchLatestDistros();
               customSnackBar(
                 title: "DistroWatch",
-                description: "List of Distros refreshed",
+                description: "Latest Distros refreshed",
                 icon: Icons.person,
               );
             },
