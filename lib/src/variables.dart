@@ -10,6 +10,9 @@ import 'package:distro_watch_app/models/new_distro.dart';
 import 'package:distro_watch_app/models/package.dart';
 import 'package:distro_watch_app/models/ranking.dart';
 
+// debug
+bool isDebug = true;
+
 // List of distros
 RxList<DistroModel> distros = <DistroModel>[].obs;
 RxList<NewDistroModel> newDistros = <NewDistroModel>[].obs;

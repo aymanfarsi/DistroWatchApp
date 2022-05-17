@@ -39,17 +39,28 @@ class SettingsPage extends StatelessWidget {
               SettingsTile(
                 title: const Text('Delete Database'),
                 onPressed: (BuildContext ctx) async {
-                  await MyDatabase.openDB();
-                  List<Map<String, Object?>> tempData =
-                      await MyDatabase.getAll();
-                  await MyDatabase.deleteData();
-                  await MyDatabase.closeDB();
-                  customSnackBar(
-                    title: 'Settings',
-                    description: '${tempData.length} entries were deleted',
-                    icon: Icons.local_fire_department,
+                  Get.defaultDialog(
+                    title: 'Delete Database',
+                    content: const Text(
+                        'Are you sure you want to delete the database?'),
+                    onCancel: () {
+                      Get.back();
+                    },
+                    onConfirm: () async {
+                      await MyDatabase.openDB();
+                      List<Map<String, Object?>> tempData =
+                          await MyDatabase.getAll();
+                      await MyDatabase.deleteData();
+                      await MyDatabase.closeDB();
+                      customSnackBar(
+                        title: 'Settings',
+                        description: '${tempData.length} entries were deleted',
+                        icon: Icons.local_fire_department,
+                      );
+                      distros.clear();
+                      Get.back();
+                    },
                   );
-                  distros.clear();
                 },
               ),
               SettingsTile(
@@ -64,6 +75,17 @@ class SettingsPage extends StatelessWidget {
                 title: const Text('Go to Welcome Screen'),
                 onPressed: (BuildContext ctx) async {
                   Get.offAllNamed('/welcome');
+                },
+              ),
+              SettingsTile(
+                title: const Text('Update App'),
+                onPressed: (BuildContext ctx) async {
+                  // await updateApp();
+                  customSnackBar(
+                    title: 'Settings',
+                    description: 'Update App is not available yet',
+                    icon: Icons.local_fire_department,
+                  );
                 },
               ),
             ],

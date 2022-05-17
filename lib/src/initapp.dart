@@ -19,6 +19,10 @@ import 'package:workmanager/workmanager.dart';
 Future<void> initApp() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // TODO: Add download handler
+  // await FlutterDownloader.initialize(
+  //   debug: isDebug,
+  // );
   // if (Platform.isAndroid) await AndroidAlarmManager.initialize();
   await initWorkManager();
   await initNotifications();
@@ -88,7 +92,7 @@ Future<void> refreshDistros() async {
 Future<void> initWorkManager() async {
   await Workmanager().initialize(
     checkNewDistros,
-    isInDebugMode: true,
+    isInDebugMode: isDebug,
   );
   // setup periodic task to check for new distros
   await Workmanager().registerPeriodicTask(

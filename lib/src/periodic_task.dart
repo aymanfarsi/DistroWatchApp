@@ -8,7 +8,7 @@ import 'package:workmanager/workmanager.dart';
 Future<void> checkNewDistros() async {
   Workmanager().executeTask(
     (task, inputData) async {
-      await pushNotification('Checking for new distros...');
+      // await pushNotification('Checking for new distros...');
       List<DistroModel> oldDistros = distros;
       String? response = await FetchData.getData();
       if (response != null) {
