@@ -5,6 +5,7 @@ void customSnackBar({
   required String title,
   required String description,
   required IconData icon,
+  Duration duration = const Duration(seconds: 4),
 }) =>
     Get.snackbar(
       title,
@@ -15,7 +16,7 @@ void customSnackBar({
       borderRadius: 20,
       margin: const EdgeInsets.all(15),
       colorText: Colors.white,
-      duration: const Duration(seconds: 4),
+      duration: duration,
       isDismissible: true,
       dismissDirection: DismissDirection.horizontal,
       forwardAnimationCurve: Curves.easeOutBack,

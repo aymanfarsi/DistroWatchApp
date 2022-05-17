@@ -20,14 +20,16 @@ class _RankingsState extends State<Rankings> {
 
   final ScrollController _scrollController = ScrollController();
 
-  RankType _rankType = RankType.Last7days;
+  final Rx<RankType> _rankType = RankType.Trendingpast7days.obs;
 
   _fetchRankings() async {
-    await parseRankings(_rankType);
+    await parseRankings(_rankType.value);
     customSnackBar(
       title: 'Success',
-      description: 'Rankings updated based on ${getType(type: _rankType)}',
+      description:
+          'Rankings updated based on ${getType(type: _rankType.value)}',
       icon: Icons.check_circle,
+      duration: const Duration(seconds: 1),
     );
   }
 
@@ -71,27 +73,29 @@ class _RankingsState extends State<Rankings> {
           child: Column(
             children: [
               Center(
-                child: DropdownButton(
-                  menuMaxHeight: 300.0,
-                  value: _rankType,
-                  borderRadius: BorderRadius.circular(15),
-                  // elevation: 0,
-                  // underline: Container(),
-                  icon: const Icon(Icons.arrow_drop_down),
-                  items: [
-                    for (RankType rankType in RankType.values.reversed)
-                      DropdownMenuItem(
-                        value: rankType,
-                        child: Text(
-                          getType(type: rankType),
+                child: Obx(
+                  () => DropdownButton(
+                    menuMaxHeight: 300.0,
+                    value: _rankType.value,
+                    borderRadius: BorderRadius.circular(15),
+                    // elevation: 0,
+                    // underline: Container(),
+                    icon: const Icon(Icons.arrow_drop_down),
+                    items: [
+                      for (RankType rankType in RankType.values.reversed)
+                        DropdownMenuItem(
+                          value: rankType,
+                          child: Text(
+                            getType(type: rankType),
+                          ),
+                          alignment: Alignment.center,
                         ),
-                        alignment: Alignment.center,
-                      ),
-                  ],
-                  onChanged: (value) async {
-                    _rankType = value as RankType;
-                    await _fetchRankings();
-                  },
+                    ],
+                    onChanged: (value) async {
+                      _rankType.value = value as RankType;
+                      await _fetchRankings();
+                    },
+                  ),
                 ),
               ),
               FutureBuilder(

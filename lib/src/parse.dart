@@ -69,14 +69,18 @@ Future<void> parseRankings(RankType rankType) async {
 
 Future<dynamic?> parseLatestDistros() async {}
 
-Future<String> parseRandomDistro() async {
+Future<String?> parseRandomDistro() async {
   String? html = await FetchData.getRandomDistro();
   if (html != null) {
     Document document = parse(html);
-    String rssLink =
-        document.querySelector("th.Invert > a")!.attributes['href']!;
-    return rssLink;
+    try {
+      String rssLink =
+          document.querySelector("th.Invert > a")!.attributes['href']!;
+      return rssLink.split('/').last.split('.').first;
+    } catch (e) {
+      return null;
+    }
   } else {
-    return "NULL";
+    return null;
   }
 }

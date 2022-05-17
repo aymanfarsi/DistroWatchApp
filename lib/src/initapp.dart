@@ -41,10 +41,9 @@ Future<void> initApp() async {
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
-  // await MyDatabase.openDB();
-  // await refreshDistros();
-  // await MyDatabase.closeDB();
-  // FlutterNativeSplash
+  await MyDatabase.openDB();
+  await refreshDistros();
+  await MyDatabase.closeDB();
   FlutterNativeSplash.remove();
 }
 
