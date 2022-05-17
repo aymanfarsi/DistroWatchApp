@@ -98,7 +98,8 @@ class _DetailsPageState extends State<DetailsPage> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height - kToolbarHeight,
           child: FutureBuilder<Map<String, dynamic>>(
-            future: CustomWebScraper.getDistroDetails(section: distro.section),
+            future:
+                CustomWebScraper.getDistroDetails(section: distro.description),
             builder: (BuildContext context,
                 AsyncSnapshot<Map<String, dynamic>> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
@@ -123,7 +124,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                 flex: 2,
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                      'https://distrowatch.com/images/yvzhuwbpy/${distro.section}.png',
+                                      'https://distrowatch.com/images/yvzhuwbpy/${distro.description}.png',
                                 ),
                               ),
                               Expanded(
@@ -135,7 +136,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                   ),
                                   child: CachedNetworkImage(
                                     imageUrl:
-                                        'https://distrowatch.com/images/ktyxqzobhgijab/${distro.section}-small.png',
+                                        'https://distrowatch.com/images/ktyxqzobhgijab/${distro.description}-small.png',
                                     fit: BoxFit.fitWidth,
                                     filterQuality: FilterQuality.high,
                                   ),
@@ -278,7 +279,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                 onPressed: () async {
                                   await openLink(
                                     link:
-                                        'https://distrowatch.com/table.php?distribution=${distro.section}',
+                                        'https://distrowatch.com/table.php?distribution=${distro.description}',
                                   );
                                 },
                                 icon: const Icon(Icons.web),

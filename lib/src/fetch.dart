@@ -47,4 +47,26 @@ class FetchData {
       return null;
     }
   }
+
+  static Future<String?> getLatestPackages() async {
+    const String url = 'https://distrowatch.com/news/dwp.xml';
+    Dio dio = Dio();
+    Response response = await dio.get(url);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<String?> getLatestHeadlines() async {
+    const String url = 'https://distrowatch.com/news/news-headlines.xml';
+    Dio dio = Dio();
+    Response response = await dio.get(url);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return null;
+    }
+  }
 }

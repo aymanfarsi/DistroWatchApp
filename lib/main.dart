@@ -1,7 +1,6 @@
 import 'package:distro_watch_app/widgets/latest_distros.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:flavorbanner/flavorbanner.dart';
 
 import 'package:distro_watch_app/widgets/about.dart';
 import 'package:distro_watch_app/widgets/details_page.dart';
@@ -9,9 +8,7 @@ import 'package:distro_watch_app/widgets/faq.dart';
 import 'package:distro_watch_app/widgets/rankings.dart';
 import 'package:distro_watch_app/widgets/latest_headlines.dart';
 import 'package:distro_watch_app/widgets/latest_packages.dart';
-import 'package:distro_watch_app/widgets/more_pages.dart';
 import 'package:distro_watch_app/widgets/random_distro.dart';
-import 'package:distro_watch_app/widgets/search_distro.dart';
 import 'package:distro_watch_app/src/initapp.dart';
 import 'package:distro_watch_app/widgets/latest_releases.dart';
 import 'package:distro_watch_app/widgets/settings_page.dart';
@@ -72,45 +69,43 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/packages',
-          page: () => const LatestPackages(),
+          page: () => LatestPackages(),
           transition: Transition.fade,
         ),
         GetPage(
           name: '/headlines',
-          page: () => const LatestHeadlines(),
+          page: () => LatestHeadlines(),
           transition: Transition.fade,
         ),
-        GetPage(
-          name: '/search',
-          page: () => const SearchDistro(),
-          transition: Transition.fade,
-        ),
+        // GetPage(
+        //   name: '/search',
+        //   page: () => const SearchDistro(),
+        //   transition: Transition.fade,
+        // ),
         GetPage(
           name: '/random',
-          page: () => RandomDistro(),
+          page: () => const RandomDistro(),
           transition: Transition.fade,
         ),
-        GetPage(
-          name: '/more',
-          page: () => const MorePages(),
-          transition: Transition.fade,
-        ),
+        // GetPage(
+        //   name: '/more',
+        //   page: () => const MorePages(),
+        //   transition: Transition.fade,
+        // ),
         GetPage(
           name: '/settings',
-          page: () => FlavorBanner(
-            child: SettingsPage(),
-          ),
+          page: () => SettingsPage(), // removed FlavorBanner
           transitionDuration: const Duration(milliseconds: 500),
           transition: Transition.fadeIn,
         ),
         GetPage(
           name: '/faq',
-          page: () => const FAQ(),
+          page: () => FAQ(),
           transition: Transition.fade,
         ),
         GetPage(
           name: '/about',
-          page: () => const About(),
+          page: () => About(),
           transition: Transition.fade,
         ),
       ],

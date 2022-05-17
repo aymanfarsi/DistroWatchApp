@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:distro_watch_app/src/periodic_task.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/variables.dart';
 import 'package:distro_watch_app/src/fetch.dart';
 import 'package:distro_watch_app/src/parse.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:workmanager/workmanager.dart';
 
 Future<void> initApp() async {
@@ -20,6 +22,7 @@ Future<void> initApp() async {
   // if (Platform.isAndroid) await AndroidAlarmManager.initialize();
   await initWorkManager();
   await initNotifications();
+  await initAbout();
   FlavorConfig(
     flavor: Flavor.DEV,
     color: Colors.grey,
@@ -103,4 +106,10 @@ Future<void> initWorkManager() async {
     ),
     backoffPolicy: BackoffPolicy.exponential,
   );
+}
+
+Future<void> initAbout() async {
+  packageInfo = await PackageInfo.fromPlatform();
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  androidInfo = await deviceInfo.androidInfo;
 }

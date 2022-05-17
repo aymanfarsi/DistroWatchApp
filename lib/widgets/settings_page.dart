@@ -1,7 +1,6 @@
 import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/notification.dart';
 import 'package:distro_watch_app/src/variables.dart';
-import 'package:distro_watch_app/widgets/custom_drawer.dart';
 import 'package:distro_watch_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,16 +17,7 @@ class SettingsPage extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         title: const Text('Settings'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
-        ),
-      ),
-      drawer: const Drawer(
-        child: CustomDrawer(),
+        centerTitle: false,
       ),
       body: SettingsList(
         shrinkWrap: false,

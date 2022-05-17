@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:distro_watch_app/models/headline.dart';
 import 'package:distro_watch_app/models/new_distro.dart';
+import 'package:distro_watch_app/models/package.dart';
+import 'package:intl/intl.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
@@ -79,7 +82,6 @@ Future<void> parseLatestDistros() async {
     for (Map<String, dynamic> item in items) {
       listItems.add(
         NewDistroModel(
-          // 05/16 FreeBSD 13.1 to FreeBSD 13.2
           title: item['title'][r'$t'].substring(
             item['title'][r'$t'].indexOf(' ') + 1,
           ),
@@ -108,5 +110,60 @@ Future<String?> parseRandomDistro() async {
     }
   } else {
     return null;
+  }
+}
+
+Future<void> parseLatestPackages() async {
+  String? data = await FetchData.getLatestPackages();
+  if (data != null) {
+    Xml2Json xml2json = Xml2Json();
+    xml2json.parse(data);
+    Map<String, dynamic> results = jsonDecode(xml2json.toGData());
+    List<dynamic> items = results['rss']['channel']['item'];
+    List<PackageModel> listItems = [];
+    for (Map<String, dynamic> item in items) {
+      listItems.add(
+        PackageModel(
+          title: item['title'][r'$t'].substring(
+            item['title'][r'$t'].indexOf(' ') + 1,
+          ),
+          url: item['link'][r'$t'],
+          description: item['description'][r'$t'],
+          dayMonth: item['title'][r'$t'].split(' ').first,
+        ),
+      );
+    }
+    packages.value = listItems;
+  } else {
+    return;
+  }
+}
+
+Future<void> parseLatestHeadlines() async {
+  String? data = await FetchData.getLatestHeadlines();
+  if (data != null) {
+    Xml2Json xml2json = Xml2Json();
+    xml2json.parse(data);
+    Map<String, dynamic> results = jsonDecode(xml2json.toGData());
+    List<dynamic> items = results['rss']['channel']['item'];
+    List<HeadlineModel> listItems = [];
+    for (Map<String, dynamic> item in items) {
+      listItems.add(
+        HeadlineModel(
+          title: item['title'][r'$t'].trim(),
+          link: item['link'][r'$t'].trim(),
+          // 'EEE, d LLLL yyyy hh:mm:ss'
+          pubDate: DateFormat(
+            'EEE, d MMM yyyy hh:mm:ss',
+          ).parse(
+            item['pubDate'][r'$t'].trim(),
+          ),
+          guid: item[r'guid'][r'$t'].trim(),
+        ),
+      );
+    }
+    headlines.value = listItems;
+  } else {
+    return;
   }
 }

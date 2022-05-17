@@ -32,9 +32,11 @@ Future<void> checkNewDistros() async {
             (item) => newUrls.contains(item.url),
           )
           .toList();
-      await pushNotification(
-        '${newDistros.length} New Linux Distros 😎',
-      );
+      if (newDistros.isNotEmpty) {
+        await pushNotification(
+          '${newDistros.length} New Linux Distros 😎',
+        );
+      }
       return Future.value(true);
     },
   );
