@@ -68,7 +68,7 @@ class _DetailsPageState extends State<DetailsPage> {
     bool isNewDistro = false;
     // ignore: prefer_typing_uninitialized_variables
     final distro;
-    if (Get.arguments.runtimeType is DistroModel) {
+    if (Get.arguments is DistroModel) {
       distro = Get.arguments as DistroModel;
     } else {
       distro = Get.arguments as NewDistroModel;
@@ -98,8 +98,7 @@ class _DetailsPageState extends State<DetailsPage> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height - kToolbarHeight,
           child: FutureBuilder<Map<String, dynamic>>(
-            future:
-                CustomWebScraper.getDistroDetails(section: distro.description),
+            future: CustomWebScraper.getDistroDetails(section: distro.section),
             builder: (BuildContext context,
                 AsyncSnapshot<Map<String, dynamic>> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
@@ -124,7 +123,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                 flex: 2,
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                      'https://distrowatch.com/images/yvzhuwbpy/${distro.description}.png',
+                                      'https://distrowatch.com/images/yvzhuwbpy/${distro.section}.png',
                                 ),
                               ),
                               Expanded(
@@ -136,7 +135,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                   ),
                                   child: CachedNetworkImage(
                                     imageUrl:
-                                        'https://distrowatch.com/images/ktyxqzobhgijab/${distro.description}-small.png',
+                                        'https://distrowatch.com/images/ktyxqzobhgijab/${distro.section}-small.png',
                                     fit: BoxFit.fitWidth,
                                     filterQuality: FilterQuality.high,
                                   ),
@@ -146,7 +145,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                         ),
                         if (!isNewDistro)
-                          Row(
+                          Column(
                             children: [
                               const SizedBox(
                                 height: 10,
