@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:distro_watch_app/models/new_distro.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
@@ -67,7 +68,32 @@ Future<void> parseRankings(RankType rankType) async {
   }
 }
 
-Future<dynamic?> parseLatestDistros() async {}
+Future<void> parseLatestDistros() async {
+  String? data = await FetchData.getLatestDistros();
+  if (data != null) {
+    Xml2Json xml2json = Xml2Json();
+    xml2json.parse(data);
+    Map<String, dynamic> results = jsonDecode(xml2json.toGData());
+    List<dynamic> items = results['rss']['channel']['item'];
+    List<NewDistroModel> listItems = [];
+    for (Map<String, dynamic> item in items) {
+      listItems.add(
+        NewDistroModel(
+          // 05/16 FreeBSD 13.1 to FreeBSD 13.2
+          title: item['title'][r'$t'].substring(
+            item['title'][r'$t'].indexOf(' ') + 1,
+          ),
+          url: item['link'][r'$t'],
+          section: item['link'][r'$t'].split('/').last,
+          dayMonth: item['title'][r'$t'].split(' ').first,
+        ),
+      );
+    }
+    newDistros.value = listItems;
+  } else {
+    return;
+  }
+}
 
 Future<String?> parseRandomDistro() async {
   String? html = await FetchData.getRandomDistro();

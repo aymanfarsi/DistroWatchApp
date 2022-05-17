@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distro_watch_app/helpers/open_link.dart';
 import 'package:distro_watch_app/models/distro.dart';
+import 'package:distro_watch_app/models/new_distro.dart';
 import 'package:distro_watch_app/src/web_scrap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -64,11 +65,19 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    DistroModel distro = Get.arguments as DistroModel;
+    bool isNewDistro = false;
+    // ignore: prefer_typing_uninitialized_variables
+    final distro;
+    if (Get.arguments.runtimeType is DistroModel) {
+      distro = Get.arguments as DistroModel;
+    } else {
+      distro = Get.arguments as NewDistroModel;
+      isNewDistro = true;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          distro.title.substring(22),
+          isNewDistro ? distro.title : distro.title.substring(22),
         ),
         centerTitle: false,
         actions: [
@@ -135,33 +144,38 @@ class _DetailsPageState extends State<DetailsPage> {
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Center(
-                          child: Text(
-                            'Description',
-                            style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(9.0),
-                          child: RichText(
-                            text: TextSpan(
-                              text: distro.description,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
+                        if (!isNewDistro)
+                          Row(
+                            children: [
+                              const SizedBox(
+                                height: 10,
                               ),
-                            ),
-                            textAlign: TextAlign.justify,
-                            softWrap: true,
-                            overflow: TextOverflow.clip,
+                              const Center(
+                                child: Text(
+                                  'Description',
+                                  style: TextStyle(
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(9.0),
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: distro.description,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                  textAlign: TextAlign.justify,
+                                  softWrap: true,
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
                         const SizedBox(
                           height: 10,
                         ),

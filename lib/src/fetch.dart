@@ -27,7 +27,14 @@ class FetchData {
   }
 
   static Future<String?> getLatestDistros() async {
-    return null;
+    const String url = 'https://distrowatch.com/news/dwd.xml';
+    Dio dio = Dio();
+    Response response = await dio.get(url);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return null;
+    }
   }
 
   static Future<String?> getRandomDistro() async {
