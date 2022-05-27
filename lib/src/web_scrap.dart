@@ -1,16 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
-import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
 class CustomWebScraper {
   static Future<Map<String, dynamic>> getDistroDetails(
       {required String section}) async {
-    http.Response response = await http.get(
-      Uri.parse(
-        'https://distrowatch.com/table.php?distribution=$section',
-      ),
+    Dio dio = Dio();
+    Response response = await dio.get(
+      'https://distrowatch.com/table.php?distribution=$section',
     );
-    Document document = parse(response.body);
+    Document document = parse(response.data);
     List<Element> elements = document.querySelectorAll(
       "td > ul > li",
     );
@@ -48,7 +47,9 @@ class CustomWebScraper {
       } else if (element.text.contains('Home Page')) {
         info['URL'] = data.last;
       } else if (element.text.contains('Screenshots')) {
-        info['Screenshots'] = element.querySelector('a')!.attributes['href'];
+        info['Screenshots'] = element.querySelector('a') == null
+            ? 'NULL'
+            : element.querySelector('a')!.attributes['href'];
       } else if (element.text.contains('Download Mirrors')) {
         info['Downloads'] = data.last;
       }

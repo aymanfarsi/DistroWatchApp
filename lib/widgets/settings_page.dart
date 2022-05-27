@@ -1,8 +1,9 @@
 import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/notification.dart';
-import 'package:distro_watch_app/widgets/custom_drawer.dart';
+import 'package:distro_watch_app/src/variables.dart';
 import 'package:distro_watch_app/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -16,19 +17,10 @@ class SettingsPage extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         title: const Text('Settings'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
-        ),
-      ),
-      drawer: const Drawer(
-        child: CustomDrawer(),
+        centerTitle: false,
       ),
       body: SettingsList(
-        shrinkWrap: true,
+        shrinkWrap: false,
         sections: [
           SettingsSection(
             title: const Text('Common'),
@@ -47,15 +39,27 @@ class SettingsPage extends StatelessWidget {
               SettingsTile(
                 title: const Text('Delete Database'),
                 onPressed: (BuildContext ctx) async {
-                  await MyDatabase.openDB();
-                  List<Map<String, Object?>> tempData =
-                      await MyDatabase.getAll();
-                  await MyDatabase.deleteDB();
-                  await MyDatabase.closeDB();
-                  customSnackBar(
-                    title: 'Settings',
-                    description: '${tempData.length} entries were deleted',
-                    icon: Icons.local_fire_department,
+                  Get.defaultDialog(
+                    title: 'Delete Database',
+                    content: const Text(
+                        'Are you sure you want to delete the database?'),
+                    onCancel: () {
+                      Get.back();
+                    },
+                    onConfirm: () async {
+                      await MyDatabase.openDB();
+                      List<Map<String, Object?>> tempData =
+                          await MyDatabase.getAll();
+                      await MyDatabase.deleteData();
+                      await MyDatabase.closeDB();
+                      customSnackBar(
+                        title: 'Settings',
+                        description: '${tempData.length} entries were deleted',
+                        icon: Icons.local_fire_department,
+                      );
+                      distros.clear();
+                      Get.back();
+                    },
                   );
                 },
               ),
@@ -64,6 +68,23 @@ class SettingsPage extends StatelessWidget {
                 onPressed: (BuildContext ctx) async {
                   await pushNotification(
                     '23',
+                  );
+                },
+              ),
+              SettingsTile(
+                title: const Text('Go to Welcome Screen'),
+                onPressed: (BuildContext ctx) async {
+                  Get.offAllNamed('/welcome');
+                },
+              ),
+              SettingsTile(
+                title: const Text('Update App'),
+                onPressed: (BuildContext ctx) async {
+                  // await updateApp();
+                  customSnackBar(
+                    title: 'Settings',
+                    description: 'Update App is not available yet',
+                    icon: Icons.local_fire_department,
                   );
                 },
               ),
