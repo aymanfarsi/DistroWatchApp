@@ -13,7 +13,7 @@ import 'package:distro_watch_app/models/distro.dart';
 import 'package:distro_watch_app/src/database.dart';
 import 'package:distro_watch_app/src/variables.dart';
 
-Future<void> parseData(String data) async {
+Future<List<DistroModel>?> parseData(String data) async {
   Xml2Json xml2json = Xml2Json();
   xml2json.parse(data);
   Map<String, dynamic> results = jsonDecode(xml2json.toGData());
@@ -51,6 +51,7 @@ Future<void> parseData(String data) async {
     }
     await MyDatabase.closeDB();
   }
+  newDistros.isEmpty ? null : newDistros;
 }
 
 Future<void> parseRankings(RankType rankType) async {
