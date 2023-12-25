@@ -21,6 +21,8 @@ enum RankType {
   Year2019,
   Year2020,
   Year2021,
+  Year2022,
+  Year2023,
   Last12months,
   Last6months,
   Last3months,
@@ -79,6 +81,10 @@ String getType({
       return 'Year 2020';
     case RankType.Year2021:
       return 'Year 2021';
+    case RankType.Year2022:
+      return 'Year 2022';
+    case RankType.Year2023:
+      return 'Year 2023';
     case RankType.Last12months:
       return 'Last 12 months';
     case RankType.Last6months:
